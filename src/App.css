@@ -1,0 +1,29 @@
+.form-control {
+  max-width: fit-content;
+}
+
+.input-group {
+  flex-direction: column;
+}
+
+.input-row-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-row-group span:first-child {
+  min-width: 35%;
+}
+.input-row-group span:last-child {
+  width: 15%;
+  text-align: left;
+  padding-left: 10px;
+}
+.input-row-group input {
+  max-width: 50%;
+  text-align: end;
+}
+
+input[disabled] {
+  color: red;
+}
