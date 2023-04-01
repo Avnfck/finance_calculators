@@ -2,13 +2,14 @@
   "name": "calculators",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://avnfck.github.io/finance_calculators/",
+  "homepage": "https://avnfck.github.io/finance_calculators",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -b main -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "lodash": "^4.17.21",
