@@ -2,7 +2,6 @@
   "name": "calculators",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://avnfck.github.io/finance_calculators",
   "type": "module",
   "scripts": {
     "dev": "vite",
