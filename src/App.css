@@ -20,6 +20,7 @@
   padding-left: 10px;
 }
 .input-row-group input {
+  padding-right: 6px;
   max-width: 50%;
   text-align: end;
 }

@@ -60,12 +60,11 @@ export function GenerateCalculator() {
 
     let countNetProfit = initValue * duration * (interest / 365);
     countNetProfit = (1 - taxRate) * countNetProfit;
-
     calcData.netProfit = _.toString(_.ceil(countNetProfit, 2));
     calcData.totalAmount = _.toString(
       _.ceil(_.sum([initValue, countNetProfit]), 2)
     );
-
+    
     return calcData.netProfit;
   }
 
@@ -91,24 +90,28 @@ export function GenerateCalculator() {
           <InputRow
             name={'Initial Value'}
             value={calcData.initValue}
+            step={'100'}
             handler={handleInitialValueChange}
           />
           <InputRow
             name={'Duration'}
             value={calcData.duration}
             unit={'days'}
+            step={'10'}
             handler={handleDurationChange}
           />
           <InputRow
             name={'Interest'}
             value={calcData.interest}
             unit={'%'}
+            step={'0.5'}
             handler={handleInterestChange}
           />
           <InputRow
             name={'Tax Rate'}
             value={calcData.taxRate}
             unit={'%'}
+            step={'5'}
             handler={handleTaxAmountChange}
           />
           <ResultRow
