@@ -25,5 +25,23 @@
 }
 
 input[disabled] {
-  color: red;
+  color: rgb(87, 188, 94);
+}
+
+.navbar {
+  justify-content: space-between;
+}
+
+.calc-title {
+  border-radius: var(--rounded-btn, 0.5rem);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-height: 3rem;
+  font-weight: 600;
+  border-width: 1px;
+  line-height: 1.75rem;
+  border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
 }
