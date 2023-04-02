@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import { useState } from 'react';
 import { CalcTitle } from './CalcTitle';
+import { countNetProfit, countTotalAmount } from '../controllers/countProfit';
 import { InputRow } from './InputRow';
 import { ResultRow } from './ResultRow';
 
-type CalculatorData = {
+export type CalculatorData = {
   initValue: string;
   duration: string;
   interest: string;
@@ -52,23 +53,15 @@ export function GenerateCalculator() {
     });
   }
 
-  function handleNetProfitChange() {
-    const initValue = _.parseInt(calcData.initValue, 10);
-    const duration = _.parseInt(calcData.duration, 10);
-    const interest = parseFloat(calcData.interest) / 100;
-    const taxRate = parseFloat(calcData.taxRate) / 100;
+  function changeNetProfit() {
+    calcData.netProfit = countNetProfit(calcData);
 
-    let countNetProfit = initValue * duration * (interest / 365);
-    countNetProfit = (1 - taxRate) * countNetProfit;
-    calcData.netProfit = _.toString(_.ceil(countNetProfit, 2));
-    calcData.totalAmount = _.toString(
-      _.ceil(_.sum([initValue, countNetProfit]), 2)
-    );
-    
     return calcData.netProfit;
   }
 
-  function handleTotalAmountChange() {
+  function changeTotalAmount() {
+    calcData.totalAmount = countTotalAmount(calcData);
+
     return calcData.netProfit !== '0' ? calcData.totalAmount : '0';
   }
 
@@ -114,14 +107,8 @@ export function GenerateCalculator() {
             step={'5'}
             handler={handleTaxAmountChange}
           />
-          <ResultRow
-            name={'Net Profit'}
-            value={handleNetProfitChange()}
-          />
-          <ResultRow
-            name={'Total Amount'}
-            value={handleTotalAmountChange()}
-          />
+          <ResultRow name={'Net Profit'} value={changeNetProfit()} />
+          <ResultRow name={'Total Amount'} value={changeTotalAmount()} />
         </label>
       </div>
     </>
