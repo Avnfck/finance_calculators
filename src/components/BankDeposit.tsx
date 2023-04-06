@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CalcTitle } from './CalcTitle';
 import { countNetProfit, countTotalAmount } from '../controllers/countProfit';
 import { InputRow } from './InputRow';
@@ -15,8 +15,9 @@ export type CalculatorData = {
 };
 type InputChangeEventType = { target: { value: any } };
 
-export function GenerateCalculator() {
-  const [calcData, setCalcData] = useState<CalculatorData>({
+export function BankDepositCalculator() {
+  const storedCalcData = JSON.parse(localStorage.getItem('calcData') as string);
+  const [calcData, setCalcData] = useState<CalculatorData>(storedCalcData || {
     initValue: '0',
     duration: '0',
     interest: '0',
@@ -74,6 +75,10 @@ export function GenerateCalculator() {
       taxRate: '0',
     });
   }
+
+  useEffect(() => {
+    localStorage.setItem('calcData', JSON.stringify(calcData));
+  }, [calcData])
 
   return (
     <>
