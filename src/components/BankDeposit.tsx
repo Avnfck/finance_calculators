@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CalcTitle } from './CalcTitle';
 import { countNetProfit, countTotalAmount } from '../controllers/countProfit';
 import { InputRow } from './InputRow';
@@ -10,21 +10,19 @@ export type CalculatorData = {
   duration: string;
   interest: string;
   taxRate: string;
-  netProfit: string;
-  totalAmount: string;
 };
 type InputChangeEventType = { target: { value: any } };
 
 export function BankDepositCalculator() {
   const storedCalcData = JSON.parse(localStorage.getItem('calcData') as string);
-  const [calcData, setCalcData] = useState<CalculatorData>(storedCalcData || {
-    initValue: '0',
-    duration: '0',
-    interest: '0',
-    taxRate: '0',
-    netProfit: '0',
-    totalAmount: '0',
-  });
+  const [calcData, setCalcData] = useState<CalculatorData>(
+    storedCalcData || {
+      initValue: '0',
+      duration: '0',
+      interest: '0',
+      taxRate: '0',
+    }
+  );
 
   function handleInitialValueChange(e: InputChangeEventType) {
     setCalcData({
@@ -54,21 +52,11 @@ export function BankDepositCalculator() {
     });
   }
 
-  function changeNetProfit() {
-    calcData.netProfit = countNetProfit(calcData);
-
-    return calcData.netProfit;
-  }
-
-  function changeTotalAmount() {
-    calcData.totalAmount = countTotalAmount(calcData);
-
-    return calcData.netProfit !== '0' ? calcData.totalAmount : '0';
-  }
+  const netProfit = countNetProfit(calcData);
+  const totalAmount = countTotalAmount(calcData.initValue, netProfit);
 
   function handleResetButton() {
     setCalcData({
-      ...calcData,
       initValue: '0',
       duration: '0',
       interest: '0',
@@ -78,7 +66,7 @@ export function BankDepositCalculator() {
 
   useEffect(() => {
     localStorage.setItem('calcData', JSON.stringify(calcData));
-  }, [calcData])
+  }, [calcData]);
 
   return (
     <>
@@ -112,8 +100,8 @@ export function BankDepositCalculator() {
             step={'5'}
             handler={handleTaxAmountChange}
           />
-          <ResultRow name={'Net Profit'} value={changeNetProfit()} />
-          <ResultRow name={'Total Amount'} value={changeTotalAmount()} />
+          <ResultRow name={'Net Profit'} value={netProfit || '0'} />
+          <ResultRow name={'Total Amount'} value={totalAmount || '0'} />
         </label>
       </div>
     </>
