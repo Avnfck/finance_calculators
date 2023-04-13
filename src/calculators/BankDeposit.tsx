@@ -1,11 +1,10 @@
-import _ from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
-import { CalcTitle } from './CalcTitle';
+import { useEffect, useState } from 'react';
+import { CalcTitle } from '../components/CalcTitle';
 import { countNetProfit, countTotalAmount } from '../controllers/countProfit';
-import { InputRow } from './InputRow';
-import { ResultRow } from './ResultRow';
+import { InputRow } from '../components/InputRow';
+import { ResultRow } from '../components/ResultRow';
 
-export type CalculatorData = {
+export type BankDepositData = {
   initValue: string;
   duration: string;
   interest: string;
@@ -14,8 +13,8 @@ export type CalculatorData = {
 type InputChangeEventType = { target: { value: any } };
 
 export function BankDepositCalculator() {
-  const storedCalcData = JSON.parse(localStorage.getItem('calcData') as string);
-  const [calcData, setCalcData] = useState<CalculatorData>(
+  const storedCalcData = JSON.parse(localStorage.getItem('depositCalculator') as string);
+  const [calcData, setCalcData] = useState<BankDepositData>(
     storedCalcData || {
       initValue: '0',
       duration: '0',
@@ -65,7 +64,7 @@ export function BankDepositCalculator() {
   }
 
   useEffect(() => {
-    localStorage.setItem('calcData', JSON.stringify(calcData));
+    localStorage.setItem('depositCalculator', JSON.stringify(calcData));
   }, [calcData]);
 
   return (
