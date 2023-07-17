@@ -46,3 +46,7 @@ input[disabled] {
   background-color: hsl(var(--bc) / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
 }
+
+.badge input {
+  margin-left: 0.3rem;
+}
