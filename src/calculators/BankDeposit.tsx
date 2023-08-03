@@ -3,14 +3,12 @@ import { CalcTitle } from '../components/CalcTitle';
 import { countNetProfit, countTotalAmount } from '../controllers/countProfit';
 import { InputRow } from '../components/InputRow';
 import { ResultRow } from '../components/ResultRow';
-import { Capitalization } from '../components/CapitalizationCheckbox';
 
 export type BankDepositData = {
   initValue: string;
   duration: string;
   interest: string;
   taxRate: string;
-  capitalization: boolean;
 };
 type InputChangeEventType = { target: { value: any } };
 
@@ -24,7 +22,6 @@ export function BankDepositCalculator() {
       duration: '0',
       interest: '0',
       taxRate: '0',
-      capitalization: false,
     }
   );
 
@@ -65,7 +62,6 @@ export function BankDepositCalculator() {
       duration: '0',
       interest: '0',
       taxRate: '0',
-      capitalization: false,
     });
   }
 
@@ -74,10 +70,8 @@ export function BankDepositCalculator() {
   }, [calcData]);
 
   return (
-    <>
       <div className="form-control">
         <CalcTitle name={'Bank Deposit Calculator'} reset={handleResetButton} />
-        <Capitalization value={calcData.capitalization} />
         <label className="input-group">
           <InputRow
             name={'Initial Value'}
@@ -110,6 +104,5 @@ export function BankDepositCalculator() {
           <ResultRow name={'Total Amount'} value={totalAmount || '0'} />
         </label>
       </div>
-    </>
   );
 }
