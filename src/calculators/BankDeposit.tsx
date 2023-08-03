@@ -9,8 +9,6 @@ export type BankDepositData = {
   duration: string;
   interest: string;
   taxRate: string;
-  capitalizationValue: string;
-  capitalizationCheckbox: boolean;
 };
 type InputChangeEventType = { target: { value: any } };
 
@@ -24,7 +22,6 @@ export function BankDepositCalculator() {
       duration: '0',
       interest: '0',
       taxRate: '0',
-      capitalizationCheckbox: false,
     }
   );
 
@@ -40,13 +37,6 @@ export function BankDepositCalculator() {
       ...calcData,
       duration: e.target.value,
     });
-  }
-
-  function handleCapitalization(e: InputChangeEventType) {
-    setCalcData({
-      ...calcData,
-      capitalizationValue: e.target.value,
-    })
   }
 
   function handleInterestChange(e: InputChangeEventType) {
@@ -72,8 +62,6 @@ export function BankDepositCalculator() {
       duration: '0',
       interest: '0',
       taxRate: '0',
-      capitalizationValue: '0',
-      capitalizationCheckbox: false,
     });
   }
 
