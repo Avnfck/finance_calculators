@@ -30,11 +30,11 @@ export function BankDepositCalculator() {
     }
   );
 
-  function handleCapitalizationCheckBoxChange(e: InputChangeEventType) {
-    setCalcData({
+  function handleCapitalizationCheckboxChange() {
+    setCalcData(stateChangeBox => ({
       ...calcData,
-      capitalizationSwitch: e.target.value,
-    });
+      capitalizationSwitch: !stateChangeBox.capitalizationSwitch,
+    }));
   }
 
   function handleCapitalizationChange(e: InputChangeEventType) {
@@ -94,7 +94,10 @@ export function BankDepositCalculator() {
     <>
       <div className="form-control">
         <CalcTitle name={'Bank Deposit Calculator'} reset={handleResetButton} />
-        <CapitalizationCheckbox value={calcData.capitalizationSwitch} handler={handleCapitalizationCheckBoxChange} />
+        <CapitalizationCheckbox
+          value={calcData.capitalizationSwitch}
+          handler={handleCapitalizationCheckboxChange}
+        />
         <label className="input-group">
           <InputRow
             name={'Capitalization'}
