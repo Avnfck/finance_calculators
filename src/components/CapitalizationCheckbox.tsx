@@ -1,8 +1,18 @@
+import { ChangeEventHandler } from 'react';
+
+type CapitalizationCheckBoxHandlerType =
+  | ChangeEventHandler<HTMLInputElement>
+  | undefined;
+
 type CapitalizationCheckbox = {
   value: boolean;
+  handler: CapitalizationCheckBoxHandlerType;
 };
 
-export function Capitalization({ value }: CapitalizationCheckbox) {
+export function CapitalizationCheckbox({
+  value,
+  handler,
+}: CapitalizationCheckbox) {
   return (
     <div className="form-control">
       <label className="cursor-pointer label">
@@ -11,7 +21,8 @@ export function Capitalization({ value }: CapitalizationCheckbox) {
           <input
             type="checkbox"
             checked={value}
-            className="checkbox checkbox-warning checkbox-xs"
+            onChange={handler}
+            className="capitalization checkbox checkbox-warning checkbox-xs"
           />
         </div>
       </label>

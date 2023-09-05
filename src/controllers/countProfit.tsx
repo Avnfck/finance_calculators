@@ -3,11 +3,27 @@ import { BankDepositData } from '../calculators/BankDeposit';
 import { RevertBankDepositData } from '../calculators/BankDepositReverted';
 
 export function countNetProfit({
-  taxRate,
-  initValue,
+  capitalizationSwitch,
+  capitalization,
   duration,
+  initValue,
   interest,
+  taxRate,
 }: BankDepositData) {
+  if (capitalizationSwitch) {
+    return _.toString(
+      _.floor(
+        (parseFloat(initValue) *
+          Math.pow(
+            1 + parseFloat(interest) / (parseFloat(capitalization) * 100),
+            parseFloat(capitalization) * (parseFloat(duration) / 365)
+          ) -
+          parseFloat(initValue)) *
+          (1 - parseFloat(taxRate) / 100),
+        2
+      )
+    );
+  }
   return _.toString(
     _.floor(
       (1 - parseFloat(taxRate) / 100) *
@@ -29,7 +45,7 @@ export function countInitValue({
   totalAmount,
   duration,
   interest,
-  taxRate
+  taxRate,
 }: RevertBankDepositData): string {
   return _.toString(
     _.ceil(

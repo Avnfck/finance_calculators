@@ -3,14 +3,15 @@ import { CalcTitle } from '../components/CalcTitle';
 import { countNetProfit, countTotalAmount } from '../controllers/countProfit';
 import { InputRow } from '../components/InputRow';
 import { ResultRow } from '../components/ResultRow';
-import { Capitalization } from '../components/CapitalizationCheckbox';
+import { CapitalizationCheckbox } from '../components/CapitalizationCheckbox';
 
 export type BankDepositData = {
-  initValue: string;
+  capitalization: string;
+  capitalizationSwitch: boolean;
   duration: string;
+  initValue: string;
   interest: string;
   taxRate: string;
-  capitalization: boolean;
 };
 type InputChangeEventType = { target: { value: any } };
 
@@ -20,13 +21,28 @@ export function BankDepositCalculator() {
   );
   const [calcData, setCalcData] = useState<BankDepositData>(
     storedCalcData || {
-      initValue: '0',
+      capitalization: '0',
+      capitalizationSwitch: false,
       duration: '0',
+      initValue: '0',
       interest: '0',
       taxRate: '0',
-      capitalization: false,
     }
   );
+
+  function handleCapitalizationCheckBoxChange(e: InputChangeEventType) {
+    setCalcData({
+      ...calcData,
+      capitalizationSwitch: e.target.value,
+    });
+  }
+
+  function handleCapitalizationChange(e: InputChangeEventType) {
+    setCalcData({
+      ...calcData,
+      capitalization: e.target.value,
+    });
+  }
 
   function handleInitialValueChange(e: InputChangeEventType) {
     setCalcData({
@@ -61,11 +77,12 @@ export function BankDepositCalculator() {
 
   function handleResetButton() {
     setCalcData({
-      initValue: '0',
+      capitalization: '0',
+      capitalizationSwitch: false,
       duration: '0',
+      initValue: '0',
       interest: '0',
       taxRate: '0',
-      capitalization: false,
     });
   }
 
@@ -77,8 +94,14 @@ export function BankDepositCalculator() {
     <>
       <div className="form-control">
         <CalcTitle name={'Bank Deposit Calculator'} reset={handleResetButton} />
-        <Capitalization value={calcData.capitalization} />
+        <CapitalizationCheckbox value={calcData.capitalizationSwitch} handler={handleCapitalizationCheckBoxChange} />
         <label className="input-group">
+          <InputRow
+            name={'Capitalization'}
+            value={calcData.capitalization}
+            unit={'days'}
+            handler={handleCapitalizationChange}
+          />
           <InputRow
             name={'Initial Value'}
             value={calcData.initValue}
